@@ -1,7 +1,7 @@
 # motion-gradle
 
 motion-gradle allows RubyMotion projects to integrate with the
-[Gradle](http://gradle.apache.org/) dependency manager.
+[Gradle](https://gradle.org/) dependency manager.
 
 
 ## Installation
