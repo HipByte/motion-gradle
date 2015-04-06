@@ -1,0 +1,5 @@
+.*.sw?
+pkg
+tmp
+vendor/Gradle
+build
