@@ -26,7 +26,7 @@ gem 'motion-gradle'
 
 You also need to install `Extras/Android Support Repository` the Android SDK Manager gui.
 
-![android-sdk-manager](https://raw.github.com/jaffeux/motion-gradle/images/android-sdk-manager.png)
+![android-sdk-manager](https://raw.githubusercontent.com/jjaffeux/motion-gradle/master/images/android-sdk-manager.png)
 
 
 ## Setup
