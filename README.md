@@ -24,7 +24,7 @@ Or if you use Bundler:
 gem 'motion-gradle'
 ```
 
-You also need to install `Extras/Android Support Repository` the Android SDK Manager gui.
+You also need to install `Extras/Android Support Repository` with the Android SDK Manager gui.
 
 ![android-sdk-manager](https://raw.githubusercontent.com/jjaffeux/motion-gradle/master/images/android-sdk-manager.png)
 
