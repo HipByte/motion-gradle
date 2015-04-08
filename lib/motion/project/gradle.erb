@@ -8,7 +8,7 @@ task generateDependencies(type: Jar) {
 }
 
 repositories {
-  def androidHome = System.getenv("ANDROID_HOME")
+  def androidHome = System.getenv("RUBYMOTION_ANDROID_SDK")
   maven {
     url "$androidHome/extras/android/m2repository/"
   }
