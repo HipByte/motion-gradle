@@ -23,7 +23,7 @@ module Motion::Project
     GRADLE_ROOT = 'vendor/Gradle'
 
     def initialize(config)
-      @gradle_path = '/usr/local/bin/gradle'
+      @gradle_path = '/usr/bin/env gradle'
       @config = config
       @dependencies = []
       @repositories = []

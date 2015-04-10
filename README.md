@@ -59,7 +59,7 @@ You also need to install `Extras/Android Support Repository` with the Android SD
 
 ## Configuration
 
-If the `gradle` command is not located at `/usr/local/bin/gradle`, you can configure it:
+If the `gradle` command is not found in your PATH, you can configure it:
 
 ```ruby
 Motion::Project::App.setup do |app|
