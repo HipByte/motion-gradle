@@ -78,7 +78,7 @@ module Motion::Project
         exit 1
       end
 
-      if ENV['GRADLE_DEBUG']
+      if ENV['MOTION_GRADLE_DEBUG']
         "#{@gradle_path} --info"
       else
         "#{@gradle_path}"
