@@ -2,6 +2,9 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 
 task generateDependencies(type: Jar) {
+  exclude 'META-INF/LICENSE.txt'
+  exclude 'META-INF/NOTICE.txt'
+
   baseName = 'dependencies'
   from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
   with jar
