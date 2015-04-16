@@ -2,6 +2,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 
 task generateDependencies(type: Jar) {
+  exclude 'META-INF/LICENSE'
   exclude 'META-INF/LICENSE.txt'
   exclude 'META-INF/NOTICE.txt'
 
