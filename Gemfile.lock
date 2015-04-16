@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    motion-gradle (1.0.0)
+    motion-gradle (1.0.3)
 
 GEM
   remote: https://rubygems.org/
