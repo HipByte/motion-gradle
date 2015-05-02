@@ -7,15 +7,14 @@ task generateDependencies(type: Copy) {
 }
 
 repositories {
-  def androidHome = System.getenv("RUBYMOTION_ANDROID_SDK")
   <% if android_repository %>
     maven {
-      url "$androidHome/extras/android/m2repository/"
+      url "<%= ENV['RUBYMOTION_ANDROID_SDK'] %>/extras/android/m2repository/"
     }
   <% end %>
   <% if google_repository %>
     maven {
-      url "$androidHome/extras/google/m2repository/"
+      url "<%= ENV['RUBYMOTION_ANDROID_SDK'] %>/extras/google/m2repository/"
     }
   <% end %>
   <% @repositories.each do |url| %>
