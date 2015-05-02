@@ -14,6 +14,7 @@ module Motion::Project
       @gradle ||= Motion::Project::Gradle.new(self)
       if block
         @gradle.instance_eval(&block)
+        @gradle.configure_project
       end
       @gradle
     end
@@ -27,11 +28,28 @@ module Motion::Project
       @config = config
       @dependencies = []
       @repositories = []
-      configure_project
     end
 
     def configure_project
-      @config.vendor_project(:jar => "#{GRADLE_ROOT}/build/libs/dependencies.jar")
+      aars_dependendies = Dir[File.join(GRADLE_ROOT, 'aar/*')]
+      aars_dependendies.each do |dependency|
+        jar = File.join(dependency, 'classes.jar')
+        res = File.join(dependency, 'res')
+        if File.exist?(res)
+          @config.vendor_project({
+            :jar => jar,
+            :resources => res,
+            :manifest => File.join(dependency, 'AndroidManifest.xml')
+          })
+        else
+          @config.vendor_project(:jar => jar)
+        end
+      end
+
+      jars = Dir[File.join(GRADLE_ROOT, 'dependencies/*.jar')]
+      jars.each do |jar|
+        @config.vendor_project(:jar => jar)
+      end
     end
 
     def path=(path)
@@ -57,9 +75,20 @@ module Motion::Project
       end
 
       system("#{gradle_command} --build-file #{gradle_build_file} generateDependencies")
+      extract_aars
     end
 
     # Helpers
+    def extract_aars
+      aars = Dir[File.join(GRADLE_ROOT, "dependencies/**/*.aar")]
+      aar_dir = File.join(GRADLE_ROOT, 'aar')
+      FileUtils.mkdir_p(aar_dir)
+      aars.each do |aar|
+        filename = File.basename(aar, '.aar')
+        system("unzip -o -qq #{aar} -d #{aar_dir}/#{filename}")
+      end 
+    end
+
     def generate_gradle_build_file
       template_path = File.expand_path("../gradle.erb", __FILE__)
       template = ERB.new(File.new(template_path).read, nil, "%")
@@ -104,7 +133,10 @@ end
 namespace :gradle do
   desc "Download and build dependencies"
   task :install do
-    FileUtils.mkdir_p(Motion::Project::Gradle::GRADLE_ROOT)
+    root = Motion::Project::Gradle::GRADLE_ROOT
+    FileUtils.mkdir_p(root)
+    rm_rf(File.join(root, 'dependencies'))
+    rm_rf(File.join(root, 'aar'))
     dependencies = App.config.gradle
     dependencies.install!(true)
   end
@@ -112,10 +144,10 @@ end
 
 namespace :clean do
   task :all do
-    dir = Motion::Project::Gradle::GRADLE_ROOT
-    if File.exist?(dir)
-      App.info('Delete', dir)
-      rm_rf(dir)
+    root = Motion::Project::Gradle::GRADLE_ROOT
+    if File.exist?(root)
+      App.info('Delete', root)
+      rm_rf(root)
     end
   end
 end

@@ -1,15 +1,10 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
+apply plugin: 'application'
 
-task generateDependencies(type: Jar) {
-  exclude 'META-INF/LICENSE'
-  exclude 'META-INF/LICENSE.txt'
-  exclude 'META-INF/NOTICE'
-  exclude 'META-INF/NOTICE.txt'
-
-  baseName = 'dependencies'
-  from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-  with jar
+task generateDependencies(type: Copy) {
+  from sourceSets.main.runtimeClasspath
+  into 'dependencies/'
 }
 
 repositories {
