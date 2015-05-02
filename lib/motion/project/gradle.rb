@@ -14,7 +14,6 @@ module Motion::Project
       @gradle ||= Motion::Project::Gradle.new(self)
       if block
         @gradle.instance_eval(&block)
-        @gradle.configure_project
       end
       @gradle
     end
@@ -28,6 +27,7 @@ module Motion::Project
       @config = config
       @dependencies = []
       @repositories = []
+      configure_project
     end
 
     def configure_project
@@ -35,15 +35,13 @@ module Motion::Project
       aars_dependendies.each do |dependency|
         jar = File.join(dependency, 'classes.jar')
         res = File.join(dependency, 'res')
+
+        vendor_options = {:jar => jar}
         if File.exist?(res)
-          @config.vendor_project({
-            :jar => jar,
-            :resources => res,
-            :manifest => File.join(dependency, 'AndroidManifest.xml')
-          })
-        else
-          @config.vendor_project(:jar => jar)
+          vendor_options[:resources] = res
+          vendor_options[:manifest] = File.join(dependency, 'AndroidManifest.xml')
         end
+        @config.vendor_project(vendor_options)
       end
 
       jars = Dir[File.join(GRADLE_ROOT, 'dependencies/*.jar')]
