@@ -66,19 +66,31 @@ module Motion::Project
 
     def install!(update)
       generate_gradle_build_file
-      support_repository = File.join(ENV['RUBYMOTION_ANDROID_SDK'], 'extras', 'android', 'm2repository')
-
-      unless File.exist?(support_repository)
-        gui_path = File.join(ENV['RUBYMOTION_ANDROID_SDK'], 'tools', 'android')
-        $stderr.puts("[!] To use motion-gradle you need to install `Extras/Android Support Repository`. Open the gui to install it : #{gui_path}")
-        exit(1)
-      end
-
       system("#{gradle_command} --build-file #{gradle_build_file} generateDependencies")
       extract_aars
     end
 
+    def android_repository
+      android_repository = File.join(ENV['RUBYMOTION_ANDROID_SDK'], 'extras', 'android', 'm2repository')
+      unless exist = File.exist?(android_repository)
+        App.info('[warning]', "To avoid issues you should install `Extras/Android Support Repository`. Open the gui to install it : #{android_gui_path}")
+      end
+      exist
+    end
+
+    def google_repository
+      google_repository = File.join(ENV['RUBYMOTION_ANDROID_SDK'], 'extras', 'google', 'm2repository')
+      unless exist = File.exist?(google_repository)
+        App.info('[warning]', "To avoid issues you should install `Extras/Google Repository`. Open the gui to install it : #{android_gui_path}")
+      end
+      exist
+    end
+
     # Helpers
+    def android_gui_path
+      @android_gui_path ||= File.join(ENV['RUBYMOTION_ANDROID_SDK'], 'tools', 'android')
+    end
+
     def extract_aars
       aars = Dir[File.join(GRADLE_ROOT, "dependencies/**/*.aar")]
       aar_dir = File.join(GRADLE_ROOT, 'aar')
