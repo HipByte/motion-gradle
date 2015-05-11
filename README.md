@@ -48,6 +48,7 @@ You also need to install `Extras/Android Support Repository` with the Android SD
       dependency 'com.mcxiaoke.volley', :artifact => 'library', :version => '1.0.10'
       dependency 'commons-cli'
       dependency 'ehcache', :version => '1.2.3'
+      dependency 'com.joanzapata.pdfview', :artifact => 'android-pdfview', :version => '1.0.2', :extension => 'aar'
     end
   end
   ```
@@ -55,6 +56,8 @@ You also need to install `Extras/Android Support Repository` with the Android SD
   * :version will default to latest: +
 
   * :artifact will default to dependency name
+
+  * :extension will default to: 'jar'
 
 
 ## Configuration

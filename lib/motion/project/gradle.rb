@@ -31,23 +31,8 @@ module Motion::Project
     end
 
     def configure_project
-      aars_dependendies = Dir[File.join(GRADLE_ROOT, 'aar/*')]
-      aars_dependendies.each do |dependency|
-        jar = File.join(dependency, 'classes.jar')
-        res = File.join(dependency, 'res')
-
-        vendor_options = {:jar => jar}
-        if File.exist?(res)
-          vendor_options[:resources] = res
-          vendor_options[:manifest] = File.join(dependency, 'AndroidManifest.xml')
-        end
-        @config.vendor_project(vendor_options)
-      end
-
-      jars = Dir[File.join(GRADLE_ROOT, 'dependencies/*.jar')]
-      jars.each do |jar|
-        @config.vendor_project(:jar => jar)
-      end
+      vendor_aars
+      vendor_jars
     end
 
     def path=(path)
@@ -65,6 +50,9 @@ module Motion::Project
     def install!(update)
       generate_gradle_build_file
       system("#{gradle_command} --build-file #{gradle_build_file} generateDependencies")
+
+      # this might be uneeded in the future
+      # if RM does support .aar out of the box
       extract_aars
     end
 
@@ -85,6 +73,37 @@ module Motion::Project
     end
 
     # Helpers
+    def vendor_aars
+      aars_dependendies = Dir[File.join(GRADLE_ROOT, 'aar/*')]
+      aars_dependendies.each do |dependency|
+        vendor_options = {:jar => File.join(dependency, 'classes.jar')}
+
+        res = File.join(dependency, 'res')
+        if File.exist?(res)
+          vendor_options[:resources] = res
+          vendor_options[:manifest] = File.join(dependency, 'AndroidManifest.xml')
+        end
+
+        native = File.join(dependency, 'jni')
+        if File.exist?(native)
+          archs = @config.archs.uniq.map do |arch|
+            @config.armeabi_directory_name(arch)
+          end
+          libs = Dir[File.join(native, "{#{archs.join(',')}}", "*.so")]
+          vendor_options[:native] = libs
+        end
+
+        @config.vendor_project(vendor_options)
+      end
+    end
+
+    def vendor_jars
+      jars = Dir[File.join(GRADLE_ROOT, 'dependencies/*.jar')]
+      jars.each do |jar|
+        @config.vendor_project(:jar => jar)
+      end
+    end
+
     def android_gui_path
       @android_gui_path ||= File.join(ENV['RUBYMOTION_ANDROID_SDK'], 'tools', 'android')
     end
@@ -128,7 +147,8 @@ module Motion::Project
       {
         name: name,
         version: options.fetch(:version, '+'),
-        artifact: options.fetch(:artifact, name)
+        artifact: options.fetch(:artifact, name),
+        extension: options.fetch(:extension, "jar"),
       }
     end
 

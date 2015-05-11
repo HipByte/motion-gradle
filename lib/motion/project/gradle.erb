@@ -27,6 +27,6 @@ repositories {
  
 dependencies {
   <% @dependencies.each do |dependency| %>
-    compile '<%= dependency[:name] %>:<%= dependency[:artifact] %>:<%= dependency[:version] %>'
+    compile group: '<%= dependency[:name] %>', name: '<%= dependency[:artifact] %>', version: '<%= dependency[:version] %>', ext: '<%= dependency[:extension]%>'
   <% end %>
 }
