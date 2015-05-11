@@ -27,6 +27,10 @@ repositories {
  
 dependencies {
   <% @dependencies.each do |dependency| %>
+    <% if dependency.is_a?(String) %>
+      compile '<%= dependency %>'
+    <% else %>
     compile group: '<%= dependency[:name] %>', name: '<%= dependency[:artifact] %>', version: '<%= dependency[:version] %>', ext: '<%= dependency[:extension]%>'
+    <% end %>
   <% end %>
 }

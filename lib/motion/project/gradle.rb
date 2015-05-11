@@ -40,7 +40,12 @@ module Motion::Project
     end
 
     def dependency(name, options = {})
-      @dependencies << normalized_dependency(name, options)
+      if name.include?(':')
+        @dependencies << name
+      else
+        App.info('[deprecated]', "dependency('name', options) syntax is deprecated please use a gradle config string, eg: dependency('com.joanzapata.pdfview:android-pdfview:1.0.+@aar') ")
+        @dependencies << normalized_dependency(name, options)
+      end
     end
 
     def repository(url, options = {})
