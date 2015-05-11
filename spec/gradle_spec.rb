@@ -31,8 +31,9 @@ describe "motion-gradle" do
         gradle do
           dependency 'com.mcxiaoke.volley', :artifact => 'library', :version => '1.0.10'
           dependency 'commons-cli'
-          dependency 'ehcache', :version => '1.2.3'
-          dependency 'com.google.android.gms', :artifact => 'play-services', :version => '7.3.0'
+          dependency 'net.sf.ehcache:ehcache:2.9.0'
+          dependency 'com.google.android.gms', :artifact => 'play-services', :version => '7.3.0', extension: 'aar'
+          dependency 'com.joanzapata.pdfview:android-pdfview:1.0.+@aar'
         end
       end
 
@@ -49,16 +50,11 @@ describe "motion-gradle" do
     @ran_install ||= true
     dir = (Pathname.new(@config.project_dir) + 'Gradle/aar')
     dir.should.exist
-    Dir[File.join(dir, '*')].count.should == 22
+    Dir[File.join(dir, '*')].count.should == 2
   end
 
   it "provides a list of the dependencies on #inspect" do
     @ran_install ||= true
-    @config.gradle.inspect.should == [
-      "com.mcxiaoke.volley - library (1.0.10)",
-      "commons-cli - commons-cli (+)",
-      "ehcache - ehcache (1.2.3)",
-      "com.google.android.gms - play-services (7.3.0)"
-    ].inspect
+    @config.gradle.dependencies.count.should == 5
   end
 end

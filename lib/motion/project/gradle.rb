@@ -21,6 +21,7 @@ module Motion::Project
 
   class Gradle
     GRADLE_ROOT = 'vendor/Gradle'
+    attr_reader :dependencies
 
     def initialize(config)
       @gradle_path = '/usr/bin/env gradle'
@@ -155,12 +156,6 @@ module Motion::Project
         artifact: options.fetch(:artifact, name),
         extension: options.fetch(:extension, "jar"),
       }
-    end
-
-    def inspect
-      @dependencies.map do |dependency|
-        "#{dependency[:name]} - #{dependency[:artifact]} (#{dependency[:version]})"
-      end.inspect
     end
   end
 end
