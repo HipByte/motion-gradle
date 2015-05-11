@@ -48,7 +48,7 @@ module Motion::Project
       end
     end
 
-    def repository(url, options = {})
+    def repository(url)
       @repositories << url
     end
 
