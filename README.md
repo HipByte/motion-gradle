@@ -41,24 +41,17 @@ You also need to install `Extras/Android Support Repository` with the Android SD
 
 2. Still in the `Rakefile`, set your dependencies
 
+From version 1.1.0 you can use the same gradle dependency string that Java users use.
+
   ```ruby
   Motion::Project::App.setup do |app|
     # ...
     app.gradle do
-      dependency 'com.mcxiaoke.volley', :artifact => 'library', :version => '1.0.10'
-      dependency 'commons-cli'
-      dependency 'ehcache', :version => '1.2.3'
-      dependency 'com.joanzapata.pdfview', :artifact => 'android-pdfview', :version => '1.0.2', :extension => 'aar'
+      dependency 'net.sf.ehcache:ehcache:2.9.0'
+      dependency 'com.joanzapata.pdfview:android-pdfview:1.0.+@aar'
     end
   end
   ```
-
-  * :version will default to latest: +
-
-  * :artifact will default to dependency name
-
-  * :extension will default to: 'jar'
-
 
 ## Configuration
 
