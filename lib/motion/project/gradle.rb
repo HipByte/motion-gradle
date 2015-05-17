@@ -97,10 +97,8 @@ module Motion::Project
           end
 
           libs = Dir[File.join(native, "{#{archs.join(',')}}", "*.so")]
-          libs.each do |lib|
-            unless File.exist?(lib)
-              App.info('[warning]', "Couldn’t find this native lib : #{lib}")
-            end
+          if libs.count != archs.count
+            App.info('[warning]', "Found only #{libs.count} lib(s) -> #{libs.join(',')} for #{archs.count} arch(s) : #{archs.join(',')}")
           end
           vendor_options[:native] = libs
         end
