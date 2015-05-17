@@ -53,7 +53,7 @@ describe "motion-gradle" do
     Dir[File.join(dir, '*')].count.should == 2
   end
 
-  it "provides a list of the dependencies on #inspect" do
+  it "generates the correct number of dependencies" do
     @ran_install ||= true
     @config.gradle.dependencies.count.should == 5
   end
