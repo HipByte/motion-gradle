@@ -30,7 +30,11 @@ dependencies {
     <% if dependency.is_a?(String) %>
       compile '<%= dependency %>'
     <% else %>
-    compile group: '<%= dependency[:name] %>', name: '<%= dependency[:artifact] %>', version: '<%= dependency[:version] %>', ext: '<%= dependency[:extension]%>'
+      <% if dependency[:extension] %> 
+        compile group: '<%= dependency[:name] %>', name: '<%= dependency[:artifact] %>', version: '<%= dependency[:version] %>', ext: '<%= dependency[:extension]%>'
+      <% else %>
+        compile group: '<%= dependency[:name] %>', name: '<%= dependency[:artifact] %>', version: '<%= dependency[:version] %>'
+      <% end %>
     <% end %>
   <% end %>
 }

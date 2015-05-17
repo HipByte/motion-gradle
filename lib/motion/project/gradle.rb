@@ -154,7 +154,7 @@ module Motion::Project
         name: name,
         version: options.fetch(:version, '+'),
         artifact: options.fetch(:artifact, name),
-        extension: options.fetch(:extension, "jar"),
+        extension: options.fetch(:extension, false),
       }
     end
   end
