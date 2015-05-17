@@ -3,3 +3,4 @@ pkg
 tmp
 vendor/Gradle
 build
+*.gem
