@@ -95,7 +95,13 @@ module Motion::Project
           archs = @config.archs.uniq.map do |arch|
             @config.armeabi_directory_name(arch)
           end
+
           libs = Dir[File.join(native, "{#{archs.join(',')}}", "*.so")]
+          libs.each do |lib|
+            unless File.exist?(lib)
+              App.info('[warning]', "Couldn’t find this native lib : #{lib}")
+            end
+          end
           vendor_options[:native] = libs
         end
 
