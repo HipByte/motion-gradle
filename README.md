@@ -76,6 +76,15 @@ Motion::Project::App.setup do |app|
 end
 ```
 
+## Support for local libraries
+
+app.gradle do
+  library 'mylib', path: '/Users/joffreyjaffeux/Projects/mylib'
+end
+
+If you don’t specify the path option, the library will be searched in the vendor folder.
+
+
 ## Tasks
 
 To tell motion-gradle to download your dependencies, run the following rake

@@ -24,8 +24,11 @@ repositories {
   <% end %>
   mavenCentral()
 }
- 
+
 dependencies {
+  <% @libraries.each do |library| %>
+    compile project(':<%= library[:name] %>')
+  <% end %>
   <% @dependencies.each do |dependency| %>
     <% if dependency.is_a?(String) %>
       compile '<%= dependency %>'

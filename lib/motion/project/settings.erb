@@ -1,0 +1,4 @@
+<% @libraries.each do |library| %>
+  include '<%= library[:name] %>'
+  project(':<%= library[:name] %>').projectDir = new File('<%= library[:path] %>')
+<% end %>

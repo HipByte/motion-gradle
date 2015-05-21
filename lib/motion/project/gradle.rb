@@ -22,12 +22,14 @@ module Motion::Project
   class Gradle
     GRADLE_ROOT = 'vendor/Gradle'
     attr_reader :dependencies
+    attr_reader :libraries
 
     def initialize(config)
       @gradle_path = '/usr/bin/env gradle'
       @config = config
       @dependencies = []
       @repositories = []
+      @libraries = []
       configure_project
     end
 
@@ -49,11 +51,16 @@ module Motion::Project
       end
     end
 
+    def library(library_name, options = {})
+      @libraries << {name: library_name, path: options.fetch(:path, "../../vendor/#{library_name}")}
+    end
+
     def repository(url)
       @repositories << url
     end
 
     def install!(update)
+      generate_gradle_settings_file
       generate_gradle_build_file
       system("#{gradle_command} --build-file #{gradle_build_file} generateDependencies")
 
@@ -126,6 +133,14 @@ module Motion::Project
         filename = File.basename(aar, '.aar')
         system("unzip -o -qq #{aar} -d #{aar_dir}/#{filename}")
       end 
+    end
+
+    def generate_gradle_settings_file
+      template_path = File.expand_path("../settings.erb", __FILE__)
+      template = ERB.new(File.new(template_path).read, nil, "%")
+      File.open(gradle_build_file, 'w') do |io|
+        io.puts(template.result(binding))
+      end
     end
 
     def generate_gradle_build_file
