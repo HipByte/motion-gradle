@@ -78,9 +78,14 @@ end
 
 ## Support for local libraries
 
-app.gradle do
-  library 'mylib', path: '/Users/joffreyjaffeux/Projects/mylib'
+```ruby
+Motion::Project::App.setup do |app|
+  # ...
+  app.gradle do
+    library 'mylib', path: '/Users/joffreyjaffeux/Projects/mylib'
+   end
 end
+```
 
 If you don’t specify the path option, the library will be searched in the vendor folder.
 
