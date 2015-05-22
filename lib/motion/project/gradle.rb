@@ -52,7 +52,10 @@ module Motion::Project
     end
 
     def library(library_name, options = {})
-      @libraries << {name: library_name, path: options.fetch(:path, "../../vendor/#{library_name}")}
+      @libraries << {
+        name: library_name,
+        path: options.fetch(:path, "../../#{library_name}")
+      }
     end
 
     def repository(url)
@@ -156,7 +159,7 @@ module Motion::Project
     end
 
     def gradle_settings_file
-      File.join(GRADLE_ROOT, 'setting.gradle')
+      File.join(GRADLE_ROOT, 'settings.gradle')
     end
 
     def gradle_command
