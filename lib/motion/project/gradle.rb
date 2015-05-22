@@ -138,7 +138,7 @@ module Motion::Project
     def generate_gradle_settings_file
       template_path = File.expand_path("../settings.erb", __FILE__)
       template = ERB.new(File.new(template_path).read, nil, "%")
-      File.open(gradle_build_file, 'w') do |io|
+      File.open(gradle_settings_file, 'w') do |io|
         io.puts(template.result(binding))
       end
     end
@@ -153,6 +153,10 @@ module Motion::Project
 
     def gradle_build_file
       File.join(GRADLE_ROOT, 'build.gradle')
+    end
+
+    def gradle_settings_file
+      File.join(GRADLE_ROOT, 'setting.gradle')
     end
 
     def gradle_command
