@@ -52,9 +52,14 @@ module Motion::Project
     end
 
     def library(library_name, options = {})
+      path = options.fetch(:path, library_name)
+      unless Pathname.new(path).absolute?
+        path = File.join('../..', path)
+      end
+
       @libraries << {
         name: library_name,
-        path: options.fetch(:path, "../../#{library_name}")
+        path: path
       }
     end
 
