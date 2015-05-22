@@ -87,7 +87,7 @@ Motion::Project::App.setup do |app|
 end
 ```
 
-If you don’t specify the path option, the library will be searched in the vendor folder.
+If relative path is used it's relative to your Rakefile, if you don't specify a path it will search in your_app/my_lib.
 
 
 ## Tasks
