@@ -102,3 +102,9 @@ $ [bundle exec] rake gradle:install
 After a `rake clean:all` you will need to run the install task agin.
 
 That’s all.
+
+
+## Known issues
+
+* Clunky .aar support, if you can provide failing cases of libs using .aar it would be great
+* Issue with iconify : http://hipbyte.myjetbrains.com/youtrack/issue/RM-867
