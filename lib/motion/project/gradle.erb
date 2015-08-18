@@ -31,7 +31,11 @@ dependencies {
   <% end %>
   <% @dependencies.each do |dependency| %>
     <% if dependency.is_a?(String) %>
-      compile '<%= dependency %>'
+      <% if dependency.split(/(\{.*\})/).size == 1 %>
+        compile '<%= dependency %>'
+      <% else %>
+        compile (<%= dependency.split(/(\{.*\})/)[0]%>) <%= dependency.split(/(\{.*\})/)[1]%>
+      <% end %>
     <% else %>
       <% if dependency[:extension] %> 
         compile group: '<%= dependency[:name] %>', name: '<%= dependency[:artifact] %>', version: '<%= dependency[:version] %>', ext: '<%= dependency[:extension]%>'
