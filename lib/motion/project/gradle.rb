@@ -46,9 +46,6 @@ module Motion::Project
       if name.include?(':')
         @dependencies << name
       else
-        p '########'
-        p name
-        p options
         @dependencies << LegacyDependency.new(name, options)
       end
     end
