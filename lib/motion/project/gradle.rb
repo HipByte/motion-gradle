@@ -96,7 +96,13 @@ module Motion::Project
     def vendor_aars
       aars_dependendies = Dir[File.join(GRADLE_ROOT, 'aar/*')]
       aars_dependendies.each do |dependency|
-        vendor_options = {:jar => File.join(dependency, 'classes.jar')}
+        main_jar = File.join(dependency, 'classes.jar')
+        if File.exist?(main_jar)
+          vendor_options = {:jar => main_jar}
+        else
+          next
+        end
+
         # libs/*.jar may contain dependencies, let's vendor them
         Dir[File.join(dependency, 'libs/*.jar')].each do |internal_dependancy|
           @config.vendor_project({:jar => internal_dependancy})
