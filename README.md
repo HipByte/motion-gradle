@@ -1,18 +1,18 @@
 # motion-gradle
 
-motion-gradle allows RubyMotion projects to integrate with 
+motion-gradle allows RubyMotion projects to integrate with
 [Gradle](https://gradle.org/) to manage your dependencies.
 
 
 ## Installation
 
-You need to have gradle installed: 
+You need to have gradle installed:
 
 ```
 $ brew install gradle
 ```
 
-And the gem installed: 
+And the gem installed:
 
 ```
 $ [sudo] gem install motion-gradle
@@ -24,7 +24,7 @@ Or if you use Bundler:
 gem 'motion-gradle'
 ```
 
-You also need to install `Extras/Android Support Repository` with the Android SDK Manager gui.
+You also need to install `Extras/Android Support Repository` and `Extras/Google Repository` with the Android SDK Manager gui.
 
 ![android-sdk-manager](https://raw.githubusercontent.com/jjaffeux/motion-gradle/master/images/android-sdk-manager.png)
 
