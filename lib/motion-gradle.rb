@@ -1,4 +1,5 @@
 require 'pathname'
 require 'shellwords'
+require 'motion/project/legacy_dependency'
 require 'motion/project/gradle'
 require 'motion/project/version'

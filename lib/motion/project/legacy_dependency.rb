@@ -1,4 +1,4 @@
-class Dependency
+class LegacyDependency
   def initialize(name, params)
     @options = normalized_dependency(name, params)
   end
