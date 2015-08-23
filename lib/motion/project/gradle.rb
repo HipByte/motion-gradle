@@ -46,7 +46,7 @@ module Motion::Project
       if name.include?(':')
         @dependencies << name
       else
-        @dependencies << normalized_dependency(name, options)
+        @dependencies << Dependency.new(name, options)
       end
     end
 
@@ -143,7 +143,7 @@ module Motion::Project
       aars.each do |aar|
         filename = File.basename(aar, '.aar')
         system("unzip -o -qq #{aar} -d #{aar_dir}/#{filename}")
-      end 
+      end
     end
 
     def generate_gradle_settings_file
@@ -181,15 +181,6 @@ module Motion::Project
       else
         "#{@gradle_path}"
       end
-    end
-
-    def normalized_dependency(name, options)
-      {
-        name: name,
-        version: options.fetch(:version, '+'),
-        artifact: options.fetch(:artifact, name),
-        extension: options.fetch(:extension, false),
-      }
     end
   end
 end
