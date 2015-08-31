@@ -1,0 +1,27 @@
+apply plugin: 'com.android.library'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.0.+'
+    }
+}
+
+android {
+  compileSdkVersion <%= sdk_version %>
+  buildToolsVersion "<%= build_tools_version %>"
+
+  defaultConfig {
+    minSdkVersion 21
+    targetSdkVersion 21
+    versionCode 1
+    versionName "1.0"
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+}

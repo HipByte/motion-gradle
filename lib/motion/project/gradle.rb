@@ -23,12 +23,14 @@ module Motion::Project
     GRADLE_ROOT = 'vendor/Gradle'
     attr_reader :dependencies
     attr_reader :libraries
+    attr_reader :aidls
 
     def initialize(config)
       @gradle_path = '/usr/bin/env gradle'
       @config = config
       @dependencies = []
       @repositories = []
+      @aidl_files = []
       @libraries = []
       configure_project
     end
@@ -62,11 +64,16 @@ module Motion::Project
       }
     end
 
+    def aidl(package, aidl_file_path)
+      @aidl_files << Aidl.new(package, aidl_file_path)
+    end
+
     def repository(url)
       @repositories << url
     end
 
     def install!(update)
+      vendor_aidl_files
       generate_gradle_settings_file
       generate_gradle_build_file
       system("#{gradle_command} --build-file #{gradle_build_file} generateDependencies")
@@ -93,6 +100,14 @@ module Motion::Project
     end
 
     # Helpers
+
+    def vendor_aidl_files
+      @aidl_files.each do |aidl_file|
+        aidl_file.create_structure
+        library aidl_file.name, path: File.join(GRADLE_ROOT, aidl_file.name)
+      end
+    end
+
     def vendor_aars
       aars_dependendies = Dir[File.join(GRADLE_ROOT, 'aar/*')]
       aars_dependendies.each do |dependency|

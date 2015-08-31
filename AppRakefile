@@ -14,9 +14,6 @@ Motion::Project::App.setup do |app|
   app.archs = ['x86']
 
   app.gradle do
-    repository 'https://bintray.com/bintray/jcenter'
-    dependency "me.dm7.barcodescanner", artifact: "zbar"
-    dependency "com.google.android.gms:play-services:7.3.0"
-    dependency "com.google.android.gms", :artifact => "play-services", :version => "7.3.0"
+    aidl 'com.android.vending.billing', './vendor/IInAppBillingService.aidl'
   end
 end
