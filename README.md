@@ -89,6 +89,17 @@ end
 
 If relative path is used it's relative to your Rakefile, if you don't specify a path it will search in your_app/my_lib.
 
+### Aidl
+
+```ruby
+Motion::Project::App.setup do |app|
+  # ...
+  app.gradle do
+    aidl 'com.android.vending.billing', './vendor/IInAppBillingService.aidl'
+  end
+end
+```
+
 
 ## Tasks
 
