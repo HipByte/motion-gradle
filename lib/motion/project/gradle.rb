@@ -28,6 +28,8 @@ module Motion::Project
     def initialize(config)
       @gradle_path = '/usr/bin/env gradle'
       @config = config
+      @classpaths = []
+      @plugins = []
       @dependencies = []
       @repositories = []
       @aidl_files = []
@@ -66,6 +68,14 @@ module Motion::Project
 
     def aidl(package, aidl_file_path)
       @aidl_files << Aidl.new(package, aidl_file_path)
+    end
+
+    def classpath(classpath)
+      @classpaths << classpath
+    end
+
+    def plugin(plugin)
+      @plugins << plugin
     end
 
     def repository(url)

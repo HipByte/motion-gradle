@@ -31,15 +31,14 @@ You also need to install `Extras/Android Support Repository` and `Extras/Google 
 
 ## Setup
 
-1. Edit the `Rakefile` of your RubyMotion project and add the following require
-   lines:
+Edit the `Rakefile` of your RubyMotion project and add the following require lines:
 
-   ```ruby
-   require 'rubygems'
-   require 'motion-gradle'
-   ```
+ ```ruby
+ require 'rubygems'
+ require 'motion-gradle'
+ ```
 
-2. Still in the `Rakefile`, set your dependencies
+### Dependencies
 
 From version 1.1.0 you can use the same gradle dependency string that Java users use.
 
@@ -53,7 +52,7 @@ From version 1.1.0 you can use the same gradle dependency string that Java users
   end
   ```
 
-## Configuration
+### Configuration
 
 If the `gradle` command is not found in your PATH, you can configure it:
 
@@ -64,7 +63,7 @@ Motion::Project::App.setup do |app|
 end
 ```
 
-You can also add other repositories :
+### Repositories :
 
 ```ruby
 Motion::Project::App.setup do |app|
@@ -76,7 +75,7 @@ Motion::Project::App.setup do |app|
 end
 ```
 
-## Support for local libraries
+### Java libraries
 
 ```ruby
 Motion::Project::App.setup do |app|
@@ -88,6 +87,28 @@ end
 ```
 
 If relative path is used it's relative to your Rakefile, if you don't specify a path it will search in your_app/my_lib.
+
+### Plugins
+
+```ruby
+Motion::Project::App.setup do |app|
+  # ...
+  app.gradle do
+    plugin 'com.google.gms.google-services'
+   end
+end
+```
+
+### Classpaths
+
+```ruby
+Motion::Project::App.setup do |app|
+  # ...
+  app.gradle do
+    classpath 'com.google.gms:google-services:1.3.0-beta1'
+  end
+end
+```
 
 ### Aidl
 
