@@ -110,11 +110,10 @@ module Motion::Project
     end
 
     # Helpers
-
     def vendor_aidl_files
       @aidl_files.each do |aidl_file|
-        aidl_file.create_structure
-        library aidl_file.name, path: File.join(GRADLE_ROOT, aidl_file.name)
+        aidl_file.create_lib
+        library(aidl_file.name, path: aidl_file.path)
       end
     end
 
