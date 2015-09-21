@@ -20,7 +20,7 @@ allprojects {
 apply plugin: 'java'
 apply plugin: 'eclipse'
 <% @plugins.each do |plugin| %>
-  apply plugin: '<%= 'com.google.gms.google-services' %>'
+  apply plugin: '<%= plugin %>'
 <% end %>
 
 task generateDependencies(type: Copy) {
