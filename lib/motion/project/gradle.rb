@@ -122,7 +122,9 @@ module Motion::Project
       aars_dependendies.each do |dependency|
         main_jar = File.join(dependency, 'classes.jar')
         if File.exist?(main_jar)
-          vendor_options = {:jar => main_jar}
+          jar_path = File.join(dependency, "#{File.basename(dependency)}.jar")
+          FileUtils.mv(main_jar, jar_path)
+          vendor_options = {:jar => jar_path}
         else
           next
         end
@@ -172,7 +174,7 @@ module Motion::Project
       FileUtils.mkdir_p(aar_dir)
       aars.each do |aar|
         filename = File.basename(aar, '.aar')
-        system("unzip -o -qq #{aar} -d #{aar_dir}/#{filename}")
+        system("/usr/bin/unzip -o -qq #{aar} -d #{ File.join(aar_dir, filename)}")
       end
     end
 
