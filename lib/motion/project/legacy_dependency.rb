@@ -4,7 +4,7 @@ class LegacyDependency
   end
 
   def parse
-    options = @options.delete_if { |_, v| v.nil? }.map {|k, v| "#{k}: '#{v}'"}
+    options = @options.delete_if { |_, v| v.nil? }.map { |k, v| "#{k}: '#{v}'" }
     "compile #{options.join(', ')}"
   end
 
@@ -15,7 +15,7 @@ class LegacyDependency
       group: name,
       version: params.fetch(:version, '+'),
       name: params.fetch(:artifact, name),
-      ext: params.fetch(:extension, nil),
+      ext: params.fetch(:extension, nil)
     }
   end
 end

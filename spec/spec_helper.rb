@@ -4,8 +4,8 @@ require 'bundler/setup'
 require 'pathname'
 ROOT = Pathname.new(File.expand_path('../../', __FILE__))
 
-$:.unshift(ENV['RUBYMOTION_CHECKOUT'] || "/Library/RubyMotion/lib")
-$:.unshift((ROOT + 'lib').to_s)
+$LOAD_PATH.unshift(ENV['RUBYMOTION_CHECKOUT'] || '/Library/RubyMotion/lib')
+$LOAD_PATH.unshift((ROOT + 'lib').to_s)
 
 require 'bacon'
 Bacon.summary_at_exit

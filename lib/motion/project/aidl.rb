@@ -21,15 +21,15 @@ class Aidl
   protected
 
   def create_manifest
-    io = File.new(File.join(path, 'src', 'main', 'AndroidManifest.xml'), "w")
+    io = File.new(File.join(path, 'src', 'main', 'AndroidManifest.xml'), 'w')
     io.puts("<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\" package=\"#{@package}\"></manifest>")
     io.close
   end
 
   def create_gradle_build_file
-    locals = {last_build_tools_version: last_build_tools_version}
-    erb_template = generate_erb_template(File.expand_path("../aidl_build_gradle.erb", __FILE__), locals)
-    io = File.new(File.join(path, 'build.gradle',), "w")
+    locals = { last_build_tools_version: last_build_tools_version }
+    erb_template = generate_erb_template(File.expand_path('../aidl_build_gradle.erb', __FILE__), locals)
+    io = File.new(File.join(path, 'build.gradle'), 'w')
     io.puts(erb_template)
     io.close
   end
@@ -48,7 +48,7 @@ class Aidl
 
   def last_build_tools_version
     build_tools = File.join(ENV['RUBYMOTION_ANDROID_SDK'], 'build-tools')
-    builds_tools_directories = Dir.glob(File.join(build_tools, '*')).select {|f| File.directory? f}
+    builds_tools_directories = Dir.glob(File.join(build_tools, '*')).select { |f| File.directory?(f) }
     File.basename(builds_tools_directories.last)
   end
 end

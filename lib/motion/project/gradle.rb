@@ -1,9 +1,9 @@
 unless defined?(Motion::Project::Config)
-  raise("This file must be required within a RubyMotion project Rakefile.")
+  fail('This file must be required within a RubyMotion project Rakefile.')
 end
 
 if Motion::Project::App.template != :android
-  raise("This file must be required within a RubyMotion Android project.")
+  fail('This file must be required within a RubyMotion Android project.')
 end
 
 module Motion::Project
@@ -82,7 +82,7 @@ module Motion::Project
       @repositories << url
     end
 
-    def install!(update)
+    def install!
       vendor_aidl_files
       generate_gradle_settings_file
       generate_gradle_build_file
@@ -124,14 +124,14 @@ module Motion::Project
         if File.exist?(main_jar)
           jar_path = File.join(dependency, "#{File.basename(dependency)}.jar")
           FileUtils.mv(main_jar, jar_path)
-          vendor_options = {:jar => jar_path}
+          vendor_options = { jar: jar_path }
         else
           next
         end
 
         # libs/*.jar may contain dependencies, let's vendor them
         Dir[File.join(dependency, 'libs/*.jar')].each do |internal_dependancy|
-          @config.vendor_project({:jar => internal_dependancy})
+          @config.vendor_project(jar: internal_dependancy)
         end
 
         res = File.join(dependency, 'res')
@@ -146,7 +146,7 @@ module Motion::Project
             @config.armeabi_directory_name(arch)
           end
 
-          libs = Dir[File.join(native, "{#{archs.join(',')}}", "*.so")]
+          libs = Dir[File.join(native, "{#{archs.join(',')}}", '*.so')]
           if libs.count != archs.count
             App.info('[warning]', "Found only #{libs.count} lib(s) -> #{libs.join(',')} for #{archs.count} arch(s) : #{archs.join(',')}")
           end
@@ -160,7 +160,7 @@ module Motion::Project
     def vendor_jars
       jars = Dir[File.join(GRADLE_ROOT, 'dependencies/*.jar')]
       jars.each do |jar|
-        @config.vendor_project(:jar => jar)
+        @config.vendor_project(jar: jar)
       end
     end
 
@@ -174,21 +174,21 @@ module Motion::Project
       FileUtils.mkdir_p(aar_dir)
       aars.each do |aar|
         filename = File.basename(aar, '.aar')
-        system("/usr/bin/unzip -o -qq #{aar} -d #{ File.join(aar_dir, filename)}")
+        system("/usr/bin/unzip -o -qq #{aar} -d #{File.join(aar_dir, filename)}")
       end
     end
 
     def generate_gradle_settings_file
-      template_path = File.expand_path("../settings.erb", __FILE__)
-      template = ERB.new(File.new(template_path).read, nil, "%")
+      template_path = File.expand_path('../settings.erb', __FILE__)
+      template = ERB.new(File.new(template_path).read, nil, '%')
       File.open(gradle_settings_file, 'w') do |io|
         io.puts(template.result(binding))
       end
     end
 
     def generate_gradle_build_file
-      template_path = File.expand_path("../gradle.erb", __FILE__)
-      template = ERB.new(File.new(template_path).read, nil, "%")
+      template_path = File.expand_path('../gradle.erb', __FILE__)
+      template = ERB.new(File.new(template_path).read, nil, '%')
       File.open(gradle_build_file, 'w') do |io|
         io.puts(template.result(binding))
       end
@@ -218,14 +218,14 @@ module Motion::Project
 end
 
 namespace :gradle do
-  desc "Download and build dependencies"
+  desc 'Download and build dependencies'
   task :install do
     root = Motion::Project::Gradle::GRADLE_ROOT
     FileUtils.mkdir_p(root)
     rm_rf(File.join(root, 'dependencies'))
     rm_rf(File.join(root, 'aar'))
     dependencies = App.config.gradle
-    dependencies.install!(true)
+    dependencies.install!
   end
 end
 

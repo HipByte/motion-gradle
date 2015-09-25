@@ -12,10 +12,11 @@ Gem::Specification.new do |spec|
   spec.version     = Motion::Project::Gradle::VERSION
   spec.date        = Date.today
   spec.summary     = 'Gradle integration for RubyMotion Android projects'
-  spec.description = "motion-gradle allows RubyMotion Android projects to have access to the Gradle dependency manager."
+  spec.description = 'motion-gradle allows RubyMotion Android projects to have access to the Gradle dependency manager.'
   spec.author      = 'Joffrey Jaffeux'
   spec.email       = 'j.jaffeux@gmail.com'
   spec.homepage    = 'http://www.rubymotion.com'
   spec.license     = 'MIT'
   spec.files       = Dir.glob('lib/**/*.{erb,rb}') << 'README.md' << 'LICENSE'
+  spec.add_development_dependency 'rubocop'
 end
