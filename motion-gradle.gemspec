@@ -5,11 +5,11 @@ end; end; end
 
 require 'date'
 $:.unshift File.expand_path('../lib', __FILE__)
-require 'motion/project/version'
+require 'motion_gradle/version'
 
 Gem::Specification.new do |spec|
   spec.name        = 'motion-gradle'
-  spec.version     = Motion::Project::Gradle::VERSION
+  spec.version     = MotionGradle::VERSION
   spec.date        = Date.today
   spec.summary     = 'Gradle integration for RubyMotion Android projects'
   spec.description = 'motion-gradle allows RubyMotion Android projects to have access to the Gradle dependency manager.'

@@ -1,6 +1,10 @@
 require 'pathname'
 require 'shellwords'
-require 'motion/project/legacy_dependency'
+require 'motion_gradle/legacy_dependency'
+require 'motion_gradle/aidl'
+require 'motion_gradle/template'
+require 'motion_gradle/version'
 require 'motion/project/gradle'
-require 'motion/project/aidl'
-require 'motion/project/version'
+
+module MotionGradle
+end

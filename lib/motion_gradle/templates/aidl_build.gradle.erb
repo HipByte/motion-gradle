@@ -10,12 +10,12 @@ buildscript {
 }
 
 android {
-  compileSdkVersion <%= App.config.api_version %>
+  compileSdkVersion <%= App.config.api_version.to_i %>
   buildToolsVersion "<%= last_build_tools_version %>"
 
   defaultConfig {
-    minSdkVersion <%= App.config.api_version %>
-    targetSdkVersion <%= App.config.api_version %>
+    minSdkVersion <%= App.config.api_version.to_i %>
+    targetSdkVersion <%= App.config.api_version.to_i %>
     versionCode 1
     versionName "1.0"
   }

@@ -37,6 +37,9 @@ describe 'motion-gradle' do
                                                version: '7.3.0',
                                                extension: 'aar'
           dependency 'com.joanzapata.pdfview:android-pdfview:1.0.+@aar'
+          dependency 'com.joanzapata.pdfview:android-pdfview:1.0.+@aar'
+
+          aidl 'com.android.vending.billing', './spec/fixtures/IInAppBillingService.aidl'
         end
       end
 
@@ -49,15 +52,32 @@ describe 'motion-gradle' do
     (Pathname.new(@config.project_dir) + 'Gradle/dependencies').should.exist
   end
 
-  it 'extracts aars format dependencies in tmp/Gradle/aar' do
+  it 'extracts aars dependencies in tmp/Gradle/aar' do
     @ran_install ||= true
     dir = (Pathname.new(@config.project_dir) + 'Gradle/aar')
     dir.should.exist
-    Dir[File.join(dir, '*')].count.should == 2
+
+    pdf_view = File.join(@config.project_dir, 'Gradle/aar/android-pdfview-1.0.4')
+    File.exist?(pdf_view).should == true
+
+    play_services = File.join(@config.project_dir, 'Gradle/aar/play-services-7.3.0')
+    File.exist?(play_services).should == true
   end
 
   it 'generates the correct number of dependencies' do
     @ran_install ||= true
-    @config.gradle.dependencies.count.should == 5
+    @config.gradle.dependencies.count.should == 6
+  end
+
+  it 'generates the correct folder structure for aidl' do
+    @ran_install ||= true
+    gradle = File.join(@config.project_dir, 'Gradle/iinappbillingservice/build.gradle')
+    File.exist?(gradle).should == true
+
+    manifest = File.join(@config.project_dir, 'Gradle/iinappbillingservice/src/main/AndroidManifest.xml')
+    File.exist?(manifest).should == true
+
+    aidl_file = File.join(@config.project_dir, 'Gradle/iinappbillingservice/src/main/aidl/com/android/vending/billing/IInAppBillingService.aidl')
+    File.exist?(aidl_file).should == true
   end
 end

@@ -1,4 +1,6 @@
 .*.sw?
+app
+AppRakefile
 pkg
 tmp
 vendor/Gradle

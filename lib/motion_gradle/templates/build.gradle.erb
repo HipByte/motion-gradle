@@ -4,7 +4,7 @@ buildscript {
     mavenCentral()
   }
   dependencies {
-    <% @classpaths.each do |classpath| %>
+    <% classpaths.each do |classpath| %>
       classpath '<%= classpath %>'
     <% end %>
   }
@@ -19,7 +19,7 @@ allprojects {
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
-<% @plugins.each do |plugin| %>
+<% plugins.each do |plugin| %>
   apply plugin: '<%= plugin %>'
 <% end %>
 
@@ -39,7 +39,7 @@ repositories {
       url "<%= ENV['RUBYMOTION_ANDROID_SDK'].shellescape %>/extras/google/m2repository/"
     }
   <% end %>
-  <% @repositories.each do |url| %>
+  <% repositories.each do |url| %>
     maven {
       url "<%= url %>"
     }
@@ -47,11 +47,11 @@ repositories {
 }
 
 dependencies {
-  <% @libraries.each do |library| %>
+  <% libraries.each do |library| %>
     compile project(':<%= library[:name] %>')
   <% end %>
-  <% @dependencies.each do |dependency| %>
-    <% if dependency.is_a?(LegacyDependency) %>
+  <% dependencies.each do |dependency| %>
+    <% if dependency.is_a?(MotionGradle::LegacyDependency) %>
       <%= dependency.parse %>
     <% else %>
       compile '<%= dependency %>'

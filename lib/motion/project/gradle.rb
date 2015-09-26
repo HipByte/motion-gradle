@@ -50,7 +50,7 @@ module Motion::Project
       if name.include?(':')
         @dependencies << name
       else
-        @dependencies << LegacyDependency.new(name, options)
+        @dependencies << MotionGradle::LegacyDependency.new(name, options)
       end
     end
 
@@ -59,15 +59,11 @@ module Motion::Project
       unless Pathname.new(path).absolute?
         path = File.join('../..', path)
       end
-
-      @libraries << {
-        name: library_name,
-        path: path
-      }
+      @libraries << { name: library_name, path: path }
     end
 
     def aidl(package, aidl_file_path)
-      @aidl_files << Aidl.new(package, aidl_file_path)
+      @aidl_files << MotionGradle::Aidl.new(package, aidl_file_path)
     end
 
     def classpath(classpath)
@@ -84,9 +80,9 @@ module Motion::Project
 
     def install!
       vendor_aidl_files
-      generate_gradle_settings_file
-      generate_gradle_build_file
-      system("#{gradle_command} --build-file #{gradle_build_file} generateDependencies")
+      generate_settings_file
+      generate_build_file
+      system("#{gradle_command} --build-file #{build_file} generateDependencies")
 
       # this might be uneeded in the future
       # if RM does support .aar out of the box
@@ -169,7 +165,7 @@ module Motion::Project
     end
 
     def extract_aars
-      aars = Dir[File.join(GRADLE_ROOT, "dependencies/**/*.aar")]
+      aars = Dir[File.join(GRADLE_ROOT, 'dependencies/**/*.aar')]
       aar_dir = File.join(GRADLE_ROOT, 'aar')
       FileUtils.mkdir_p(aar_dir)
       aars.each do |aar|
@@ -178,27 +174,31 @@ module Motion::Project
       end
     end
 
-    def generate_gradle_settings_file
-      template_path = File.expand_path('../settings.erb', __FILE__)
-      template = ERB.new(File.new(template_path).read, nil, '%')
-      File.open(gradle_settings_file, 'w') do |io|
-        io.puts(template.result(binding))
-      end
+    def generate_settings_file
+      template = MotionGradle::Template.new('settings.gradle')
+      template.destination = settings_file
+      template.write({libraries: @libraries})
     end
 
-    def generate_gradle_build_file
-      template_path = File.expand_path('../gradle.erb', __FILE__)
-      template = ERB.new(File.new(template_path).read, nil, '%')
-      File.open(gradle_build_file, 'w') do |io|
-        io.puts(template.result(binding))
-      end
+    def generate_build_file
+      template = MotionGradle::Template.new('build.gradle')
+      template.destination = build_file
+      template.write({
+        classpaths: @classpaths,
+        plugins: @plugins,
+        libraries: @libraries,
+        repositories: @repositories,
+        dependencies: @dependencies,
+        android_repository: android_repository,
+        google_repository: google_repository
+      })
     end
 
-    def gradle_build_file
+    def build_file
       File.join(GRADLE_ROOT, 'build.gradle')
     end
 
-    def gradle_settings_file
+    def settings_file
       File.join(GRADLE_ROOT, 'settings.gradle')
     end
 
