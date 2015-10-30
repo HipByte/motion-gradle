@@ -23,6 +23,31 @@ apply plugin: 'eclipse'
   apply plugin: '<%= plugin %>'
 <% end %>
 
+// Those dependencies might be conflicting with
+// the internal version provided by Android.
+configurations {
+  compile.exclude group: 'com.google.android', module: 'android'
+  compile.exclude group: 'org.apache.httpcomponents', module: 'httpclient'
+  compile.exclude group: 'xpp3', module: 'xpp3'
+  compile.exclude group: 'commons-logging', module: 'commons-logging'
+  compile.exclude group: 'xerces', module: 'xmlParserAPIs'
+  compile.exclude group: 'org.json', module: 'json'
+  compile.exclude group: 'org.khronos', module: 'opengl-api'
+  compile.exclude group: 'org.bouncycastle', module: 'bcprov-jdk15on'
+  compile.exclude group: 'org.bouncycastle', module: 'bcprov-jdk16'
+  compile.exclude group: 'org.bouncycastle', module: 'bcprov-jdk15'
+  compile.exclude group: 'org.bouncycastle', module: 'bcprov-ext-jdk15on'
+  compile.exclude group: 'org.bouncycastle', module: 'bcprov-jdk14'
+  compile.exclude group: 'org.bouncycastle', module: 'bcprov-jdk15+'
+  compile.exclude group: 'org.bouncycastle', module: 'bcprov-jdk12'
+  compile.exclude group: 'org.bouncycastle', module: 'bcprov-ext-jdk16'
+  compile.exclude group: 'org.bouncycastle', module: 'bcprov-ext-jdk15'
+  compile.exclude group: 'org.bouncycastle', module: 'bcprov-ext-jdk14'
+  compile.exclude group: 'org.bouncycastle', module: 'bcprov-jdk15%2b'
+  compile.exclude group: 'org.bouncycastle', module: 'bcprov-ext-debug-jdk15on'
+  compile.exclude group: 'org.bouncycastle', module: 'bcprov-debug-jdk15on'
+}
+
 task generateDependencies(type: Copy) {
   from sourceSets.main.runtimeClasspath
   into 'dependencies/'
@@ -53,8 +78,7 @@ dependencies {
   <% dependencies.each do |dependency| %>
     compile '<%= dependency.name %>', {
       <% dependency.excludes.each do |exclude| %>
-        exclude module: '<%= exclude[:module] %>',
-                group: '<%= exclude[:group] %>'
+        exclude module: '<%= exclude[:module] %>', group: '<%= exclude[:group] %>'
       <% end %>
     }
   <% end %>
