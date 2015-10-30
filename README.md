@@ -48,6 +48,9 @@ From version 1.1.0 you can use the same gradle dependency string that Java users
     app.gradle do
       dependency 'net.sf.ehcache:ehcache:2.9.0'
       dependency 'com.joanzapata.pdfview:android-pdfview:1.0.+@aar'
+      dependency 'com.danikula:videocache:2.3.1' do
+        exclude module: 'android', group: 'com.google.android'
+      end
     end
   end
   ```

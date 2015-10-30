@@ -46,12 +46,8 @@ module Motion::Project
       @gradle_path = path
     end
 
-    def dependency(name, options = {})
-      if name.include?(':')
-        @dependencies << name
-      else
-        @dependencies << MotionGradle::LegacyDependency.new(name, options)
-      end
+    def dependency(name, &block)
+      @dependencies << MotionGradle::Dependency.new(name, &block)
     end
 
     def library(library_name, options = {})

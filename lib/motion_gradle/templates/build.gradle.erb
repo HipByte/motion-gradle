@@ -51,10 +51,11 @@ dependencies {
     compile project(':<%= library[:name] %>')
   <% end %>
   <% dependencies.each do |dependency| %>
-    <% if dependency.is_a?(MotionGradle::LegacyDependency) %>
-      <%= dependency.parse %>
-    <% else %>
-      compile '<%= dependency %>'
-    <% end %>
+    compile '<%= dependency.name %>', {
+      <% dependency.excludes.each do |exclude| %>
+        exclude module: '<%= exclude[:module] %>',
+                group: '<%= exclude[:group] %>'
+      <% end %>
+    }
   <% end %>
 }
