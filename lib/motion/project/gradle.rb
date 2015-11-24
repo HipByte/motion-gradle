@@ -113,9 +113,12 @@ module Motion::Project
       aars_dependendies = Dir[File.join(GRADLE_ROOT, 'aar/*')]
       aars_dependendies.each do |dependency|
         main_jar = File.join(dependency, 'classes.jar')
+        jar_path = File.join(dependency, "#{File.basename(dependency)}.jar")
+
         if File.exist?(main_jar)
-          jar_path = File.join(dependency, "#{File.basename(dependency)}.jar")
           FileUtils.mv(main_jar, jar_path)
+          vendor_options = { jar: jar_path }
+        elsif File.exist?(jar_path)
           vendor_options = { jar: jar_path }
         else
           next
