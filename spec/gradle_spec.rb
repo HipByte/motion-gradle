@@ -29,13 +29,9 @@ describe 'motion-gradle' do
       @config.api_version = '22.0'
       @config.instance_eval do
         gradle do
-          dependency 'com.mcxiaoke.volley', artifact: 'library',
-                                            version: '1.0.10'
-          dependency 'commons-cli'
+          dependency 'com.mcxiaoke.volley:library:1.0.19'
+          dependency 'commons-cli:commons-cli:1.2'
           dependency 'net.sf.ehcache:ehcache:2.9.0'
-          dependency 'com.google.android.gms', artifact: 'play-services',
-                                               version: '7.3.0',
-                                               extension: 'aar'
           dependency 'com.joanzapata.pdfview:android-pdfview:1.0.+@aar'
           dependency 'com.joanzapata.pdfview:android-pdfview:1.0.+@aar'
 
@@ -59,14 +55,11 @@ describe 'motion-gradle' do
 
     pdf_view = File.join(@config.project_dir, 'Gradle/aar/android-pdfview-1.0.4')
     File.exist?(pdf_view).should == true
-
-    play_services = File.join(@config.project_dir, 'Gradle/aar/play-services-7.3.0')
-    File.exist?(play_services).should == true
   end
 
   it 'generates the correct number of dependencies' do
     @ran_install ||= true
-    @config.gradle.dependencies.count.should == 6
+    @config.gradle.dependencies.count.should == 5
   end
 
   it 'generates the correct folder structure for aidl' do
