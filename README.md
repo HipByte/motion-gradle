@@ -28,6 +28,13 @@ You also need to install `Extras/Android Support Repository` and `Extras/Google 
 
 ![android-sdk-manager](https://raw.githubusercontent.com/jjaffeux/motion-gradle/master/images/android-sdk-manager.png)
 
+Then, add the following lines to your ~/.profile file
+
+```
+export ANDROID_HOME=~/.rubymotion-android/sdk
+```
+
+(`ANDROID_HOME` should have same value with `RUBYMOTION_ANDROID_SDK`)
 
 ## Setup
 
