@@ -24,9 +24,9 @@ Or if you use Bundler:
 gem 'motion-gradle'
 ```
 
-You also need to install `Extras/Android Support Repository` and `Extras/Google Repository` with the Android SDK Manager gui.
+You also need to install `Local Maven repository for Support Libraries`, `Extras/Android Support Repository` and `Extras/Google Repository` with the Android SDK Manager gui.
 
-![android-sdk-manager](https://raw.githubusercontent.com/jjaffeux/motion-gradle/master/images/android-sdk-manager.png)
+![android-sdk-manager](https://raw.githubusercontent.com/HipByte/motion-gradle/master/images/android-sdk-manager.png)
 
 Then, add the following lines to your ~/.profile file
 
