@@ -24,7 +24,7 @@ Or if you use Bundler:
 gem 'motion-gradle'
 ```
 
-You also need to install `Local Maven repository for Support Libraries`, `Extras/Android Support Repository` and `Extras/Google Repository` with the Android SDK Manager gui.
+You also need to install `Extras/Local Maven repository for Support Libraries`, `Extras/Android Support Repository` and `Extras/Google Repository` with the Android SDK Manager gui.
 
 ![android-sdk-manager](https://raw.githubusercontent.com/HipByte/motion-gradle/master/images/android-sdk-manager.png)
 
