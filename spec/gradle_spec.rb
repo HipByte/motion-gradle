@@ -11,7 +11,7 @@ module Motion
     end
 
     class Gradle
-      GRADLE_ROOT = 'tmp/Gradle'
+      GRADLE_ROOT.replace 'tmp/Gradle'
     end
   end
 end
