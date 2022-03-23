@@ -26,7 +26,7 @@ describe 'motion-gradle' do
 
       @config = App.config
       @config.project_dir = temporary_directory.to_s
-      @config.api_version = '22.0'
+      @config.api_version = '30.0'
       @config.instance_eval do
         gradle do
           dependency 'com.mcxiaoke.volley:library:1.0.19'
