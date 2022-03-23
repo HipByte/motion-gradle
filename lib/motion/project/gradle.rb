@@ -208,7 +208,7 @@ module Motion::Project
       end
 
       if ENV['MOTION_GRADLE_DEBUG']
-        "#{@gradle_path} --info"
+        "#{@gradle_path} --info --warning-mode all"
       else
         "#{@gradle_path}"
       end
