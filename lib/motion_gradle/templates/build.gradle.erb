@@ -51,6 +51,7 @@ configurations {
 task generateDependencies(type: Copy) {
   from sourceSets.main.runtimeClasspath
   into 'dependencies/'
+  duplicatesStrategy = 'include'
 }
 
 repositories {
@@ -73,10 +74,10 @@ repositories {
 
 dependencies {
   <% libraries.each do |library| %>
-    compile project(':<%= library[:name] %>')
+    implementation project(':<%= library[:name] %>')
   <% end %>
   <% dependencies.each do |dependency| %>
-    compile '<%= dependency.name %>', {
+    implementation '<%= dependency.name %>', {
       <% dependency.excludes.each do |exclude| %>
         exclude module: '<%= exclude[:module] %>', group: '<%= exclude[:group] %>'
       <% end %>
