@@ -78,7 +78,7 @@ module Motion::Project
       vendor_aidl_files
       generate_settings_file
       generate_build_file
-      system("#{gradle_command} --build-file #{build_file} generateDependencies")
+      system("#{gradle_command} --project-dir #{GRADLE_ROOT} generateDependencies")
 
       # this might be uneeded in the future
       # if RM does support .aar out of the box
@@ -208,7 +208,7 @@ module Motion::Project
       end
 
       if ENV['MOTION_GRADLE_DEBUG']
-        "#{@gradle_path} --info"
+        "#{@gradle_path} --info --warning-mode all"
       else
         "#{@gradle_path}"
       end
